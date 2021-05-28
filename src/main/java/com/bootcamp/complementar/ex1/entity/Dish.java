@@ -1,19 +1,12 @@
 package com.bootcamp.complementar.ex1.entity;
 
+import lombok.Builder;
+import lombok.Getter;
+
+@Builder
+@Getter
 public class Dish {
-    private Long id;
-    private Double price;
-    private String description;
-
-    public Long getId() {
-        return id;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
+    private final Long id;
+    private final Double price;
+    private final String description;
 }

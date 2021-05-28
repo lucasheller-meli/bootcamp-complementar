@@ -1,5 +1,6 @@
 package com.bootcamp.complementar.ex1.repository;
 
+import com.bootcamp.complementar.ex1.dto.DishDTO;
 import com.bootcamp.complementar.ex1.entity.Dish;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +11,6 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -34,8 +34,34 @@ public class JsonDishRepository implements DishRepository {
         return dishes;
     }
 
-    public Dish create(Dish dish) throws IOException {
-        dishes.put(nextId, dish);
+    public Dish get(Long id) {
+        return dishes.get(id);
+    }
+
+    public Dish create(DishDTO dishDTO) throws IOException {
+        return save(nextId, dishDTO);
+    }
+
+    public Dish update(Long id, DishDTO dishDTO) throws IOException {
+        return save(id, dishDTO);
+    }
+
+    public Dish delete(Long id) throws IOException {
+        Dish dish = dishes.remove(id);
+
+        mapper.writeValue(file, dishes);
+
+        return dish;
+    }
+
+    private Dish save(Long id, DishDTO dishDTO) throws IOException {
+        Dish dish = Dish.builder()
+                .id(id)
+                .description(dishDTO.getDescription())
+                .price(dishDTO.getPrice())
+                .build();
+
+        dishes.put(id, dish);
 
         mapper.writeValue(file, dishes);
 
