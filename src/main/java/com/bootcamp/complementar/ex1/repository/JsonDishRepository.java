@@ -17,7 +17,6 @@ import java.util.Map;
 public class JsonDishRepository implements DishRepository {
     private Map<Long, Dish> dishes;
     private final ObjectMapper mapper = new ObjectMapper();
-    private final TypeReference<Map<Long, Dish>> type = new TypeReference<>() {};
     private File file;
     private Long nextId;
 
@@ -25,9 +24,10 @@ public class JsonDishRepository implements DishRepository {
     private void loadDatabase() throws IOException {
         this.file = ResourceUtils.getFile("classpath:dish.json");
 
+        TypeReference<Map<Long, Dish>> type = new TypeReference<>() {};
         this.dishes = mapper.readValue(file, type);
 
-        this.nextId = dishes.keySet().stream().max(Comparator.naturalOrder()).orElse(0L);
+        this.nextId = dishes.keySet().stream().max(Comparator.naturalOrder()).orElse(0L) + 1;
     }
 
     public Map<Long, Dish> all() {
@@ -39,7 +39,7 @@ public class JsonDishRepository implements DishRepository {
     }
 
     public Dish create(DishDTO dishDTO) throws IOException {
-        return save(nextId, dishDTO);
+        return save(nextId++, dishDTO);
     }
 
     public Dish update(Long id, DishDTO dishDTO) throws IOException {
