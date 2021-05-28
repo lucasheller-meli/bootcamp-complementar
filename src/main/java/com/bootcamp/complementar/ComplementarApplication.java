@@ -1,0 +1,13 @@
+package com.bootcamp.complementar;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class ComplementarApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ComplementarApplication.class, args);
+	}
+
+}
