@@ -13,4 +13,13 @@ public class Dish {
     private Long id;
     private Double price;
     private String description;
+
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "id=" + id +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
