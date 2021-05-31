@@ -19,12 +19,14 @@ public class TableResponse {
     private Long id;
     private List<OrderResponse> orders;
     private Double totalPrice;
+    private Boolean closed;
 
     public static TableResponse from(Table table, OrderService orderService) {
         return TableResponse.builder()
                 .id(table.getId())
                 .orders(table.orders(orderService))
                 .totalPrice(table.totalPrice(orderService))
+                .closed(table.getClosed())
                 .build();
     }
 }

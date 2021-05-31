@@ -1,6 +1,7 @@
 package com.bootcamp.complementar.ex1.repository;
 
 import com.bootcamp.complementar.ex1.dto.TableRequest;
+import com.bootcamp.complementar.ex1.entity.Order;
 import com.bootcamp.complementar.ex1.entity.Table;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,10 +55,43 @@ public class JsonTableRepository implements TableRepository {
         return table;
     }
 
+    public void close(Long id) throws IOException {
+        Table table = get(id);
+
+        Table closedTable = Table.builder()
+                .id(id)
+                .orderIds(table.getOrderIds())
+                .closed(true)
+                .build();
+
+        tables.put(id, closedTable);
+
+        mapper.writeValue(file, tables);
+    }
+
+    public void addOrder(Order order) throws IOException {
+        Long tableId = order.getTableId();
+        Table table = get(tableId);
+
+        table.getOrderIds().add(order.getId());
+
+        Table newTable = Table.builder()
+                .id(tableId)
+                .orderIds(table.getOrderIds())
+                .closed(table.getClosed())
+                .build();
+
+        tables.put(tableId, newTable);
+
+        mapper.writeValue(file, tables);
+
+    }
+
     private Table save(Long id, TableRequest tableRequest) throws IOException {
         Table table = Table.builder()
                 .id(id)
                 .orderIds(tableRequest.getOrderIds())
+                .closed(false)
                 .build();
 
         tables.put(id, table);

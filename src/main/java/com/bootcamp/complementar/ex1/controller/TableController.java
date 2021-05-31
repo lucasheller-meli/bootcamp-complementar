@@ -45,4 +45,9 @@ public class TableController {
     public ResponseEntity<TableResponse> delete(@PathVariable Long id) throws IOException {
         return ResponseEntity.ok(tableService.delete(id));
     }
+
+    @PutMapping("/close/{id}")
+    public ResponseEntity<TableResponse> close(@PathVariable Long id) throws IOException {
+        return ResponseEntity.ok(tableService.close(id));
+    }
 }

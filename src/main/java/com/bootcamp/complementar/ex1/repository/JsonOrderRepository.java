@@ -54,11 +54,28 @@ public class JsonOrderRepository implements OrderRepository {
         return order;
     }
 
+    public void close(Long id) throws IOException {
+        Order order = get(id);
+
+        Order closedOrder = Order.builder()
+                .id(id)
+                .tableId(order.getTableId())
+                .dishQuantities(order.getDishQuantities())
+                .payed(true)
+                .build();
+
+        orders.put(id, closedOrder);
+
+        mapper.writeValue(file, orders);
+
+    }
+
     private Order save(Long id, OrderRequest orderRequest) throws IOException {
         Order order = Order.builder()
                 .id(id)
                 .tableId(orderRequest.getTableId())
                 .dishQuantities(orderRequest.getDishQuantities())
+                .payed(false)
                 .build();
 
         orders.put(id, order);

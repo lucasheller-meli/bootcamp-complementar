@@ -17,6 +17,7 @@ public class Order {
     private Long id;
     private Long tableId;
     private Map<Long, Integer> dishQuantities;
+    private Boolean payed;
 
     public Map<Dish, Integer> instantiatedDishQuantities(DishService dishService) {
         return dishQuantities.entrySet()

@@ -12,4 +12,5 @@ public interface OrderRepository {
     Order create(OrderRequest orderRequest) throws IOException;
     Order update(Long id, OrderRequest orderRequest) throws IOException;
     Order delete(Long id) throws IOException;
+    void close(Long id) throws IOException;
 }

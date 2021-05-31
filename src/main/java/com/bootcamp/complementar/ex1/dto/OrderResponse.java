@@ -19,6 +19,7 @@ public class OrderResponse {
     private Long tableId;
     private Map<Dish, Integer> dishQuantities;
     private Double totalPrice;
+    private Boolean payed;
 
     public static OrderResponse from(Order order, DishService dishService) {
         return OrderResponse.builder()
@@ -26,6 +27,7 @@ public class OrderResponse {
                 .tableId(order.getTableId())
                 .dishQuantities(order.instantiatedDishQuantities(dishService))
                 .totalPrice(order.totalPrice(dishService))
+                .payed(order.getPayed())
                 .build();
     }
 }

@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class Table {
     private Long id;
     private List<Long> orderIds;
+    private Boolean closed;
 
     public List<OrderResponse> orders(OrderService orderService) {
         return orderIds.stream().map(orderService::get).collect(Collectors.toList());
